@@ -1,9 +1,17 @@
 package com.douzone.jblog.vo;
 
 public class UserVo {
+	private Long no;
 	private String id;
 	private String name;
 	private String password;
+	
+	public Long getNo() {
+		return no;
+	}
+	public void setNo(Long no) {
+		this.no = no;
+	}
 	public String getId() {
 		return id;
 	}

@@ -3,7 +3,6 @@ package com.douzone.jblog.vo;
 public class BlogVo {
 	private Long no;
 	private String title;
-	private String contents;
 	private String logo;
 	public Long getNo() {
 		return no;
@@ -17,12 +16,7 @@ public class BlogVo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getContents() {
-		return contents;
-	}
-	public void setContents(String contents) {
-		this.contents = contents;
-	}
+
 	public String getLogo() {
 		return logo;
 	}
