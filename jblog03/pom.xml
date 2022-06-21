@@ -147,7 +147,7 @@
 			    	<url>http://112.162.205.179:8079/manager/text</url>
 			    	<path>/jblog03</path>
 			    	<username>admin</username>
-			    	<password>manager</password>
+			    	<password>webdb</password>
 			    </configuration>
 			</plugin>			
 		</plugins>
