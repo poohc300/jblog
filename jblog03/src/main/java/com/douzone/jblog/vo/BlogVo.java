@@ -1,14 +1,15 @@
 package com.douzone.jblog.vo;
 
 public class BlogVo {
-	private Long no;
+	private String id;
 	private String title;
 	private String logo;
-	public Long getNo() {
-		return no;
+	
+	public String getId() {
+		return id;
 	}
-	public void setNo(Long no) {
-		this.no = no;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getTitle() {
 		return title;
