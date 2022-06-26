@@ -29,7 +29,7 @@
 		]]>
 	</select>
 	
-	<select id="findByCategoryNo" parameterType="map" resultType="postvo">
+	<select id="findByCaterogyNoPostNoBlogId" parameterType="map" resultType="postvo">
 		<choose>
 			<when test="pno == 0">
 			<![CDATA[
