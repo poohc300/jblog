@@ -20,7 +20,7 @@ public class UserService {
 	public void join(UserVo vo) {
 		userRepository.insert(vo);
 		blogRepository.insert(vo);
-		categoryRepository.insert(vo);
+		categoryRepository.create(vo);
 	}
 
 	public UserVo getUser(String email, String password) {
