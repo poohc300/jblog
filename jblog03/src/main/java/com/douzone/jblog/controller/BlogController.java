@@ -1,5 +1,6 @@
 package com.douzone.jblog.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import com.douzone.jblog.service.CategoryService;
 import com.douzone.jblog.service.FileUploadService;
 import com.douzone.jblog.service.PostService;
 import com.douzone.jblog.vo.BlogVo;
+import com.douzone.jblog.vo.CategoryVo;
+import com.douzone.jblog.vo.PostVo;
 import com.douzone.jblog.vo.UserVo;
 
 @Controller
@@ -52,7 +55,7 @@ public class BlogController {
 		} else if(pathNo1.isPresent()) {
 			categoryNo = pathNo1.get();
 		}
-		BlogVo blogVo = blogService.getAll(id);
+		BlogVo blogVo = blogService.findAll(id);
 		
 		model.addAttribute("blogVo", blogVo);
 		model.addAttribute("categoryVo", categoryService.findAll(id));
@@ -63,31 +66,90 @@ public class BlogController {
 		return "/blog/main";
 	}
 	
-	
-	@RequestMapping("/admin/basic")
-	public String adminBasic(@PathVariable("id") String id, @AuthUser UserVo authUser, Model model) {
-		if(!authUser.getId().equals(id)) {
+	@RequestMapping("/admin/category")
+	public String adminCategory(@PathVariable("id") String id, @AuthUser UserVo authUser, Model model) {
+
+		if(authUser == null) {
 			return "redirect:/";
 		}
-		BlogVo blogVo = blogService.getAll(id);
 		
-		model.addAttribute("blogVo", blogVo);
-		model.addAttribute("blog", blogService.getBlog(id));
-		
-		return "/blog/admin/basic";
+		if (!authUser.getId().equals(id)) {
+			return "redirect:/";
+		}
+		List<CategoryVo> list = categoryService.findAll(id);
+		model.addAttribute("list", list);
+		model.addAttribute("blog", blogService.findBlog(id));
+		return "/blog/admin/category";
 	}
-	@RequestMapping(value = "/admin/basic", method = RequestMethod.POST)
-	public String adminBasic(@PathVariable("id") String id, @AuthUser UserVo authUser,
-			@RequestParam("logo-file") MultipartFile multipartFile, BlogVo vo) throws FileUploadException {
 
+	@RequestMapping(value = "/admin/category", method = RequestMethod.POST)
+	public String adminCategory(@PathVariable("id") String id, @AuthUser UserVo authUser, CategoryVo vo) {
+
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		
+		if (!authUser.getId().equals(id)) {
+			return "redirect:/";
+		}
+		vo.setBlogId(id);
+		categoryService.insert(vo);
+
+		return "redirect:/" + id + "/category";
+	}
+
+	@RequestMapping(value = "/admin/category/delete/{no}", method = RequestMethod.GET)
+	public String adminCategoryDelete(@PathVariable("id") String id, @AuthUser UserVo authUser,
+			@PathVariable("no") Optional<Long> pathNo) {
+
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		
+		if (!authUser.getId().equals(id)) {
+			return "redirect:/";
+		}
+		Long no = 0L;
+
+		if (pathNo.isPresent()) { // 객체 존재여부 확인
+			no = pathNo.get();
+		}
+
+		categoryService.delete(id, no);
+
+		return "redirect:/" + id + "/category";
+	}
+
+	@RequestMapping("/admin/write")
+	public String adminWrite(@PathVariable("id") String id, @AuthUser UserVo authUser, Model model) {
+
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		
 		if (!authUser.getId().equals(id)) {
 			return "redirect:/";
 		}
 
-		String url = fileUploadService.restoreImage(multipartFile);
-		vo.setLogo(url);
-		vo.setId(authUser.getId());
-		blogService.updateBlog(vo);
+		List<CategoryVo> list = categoryService.findAll(id);
+
+		model.addAttribute("list", list);
+		model.addAttribute("blog", blogService.findBlog(id));
+		return "/blog/admin/write";
+	}
+
+	@RequestMapping(value = "/admin/write", method = RequestMethod.POST)
+	public String adminWrite(@PathVariable("id") String id, @AuthUser UserVo authUser, PostVo vo) {
+
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		
+		if (!authUser.getId().equals(id)) {
+			return "redirect:/";
+		}
+
+		postService.insert(vo);
 
 		return "redirect:/" + id;
 	}

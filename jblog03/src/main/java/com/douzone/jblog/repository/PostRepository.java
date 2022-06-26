@@ -16,23 +16,23 @@ public class PostRepository {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public List<PostVo> findAllByBlogId(String blogId) {
-		return sqlSession.selectList("post.findByBlogId", blogId);
+	public List<PostVo> findAllByBlogId(String id) {
+		return sqlSession.selectList("post.findAllByBlogId", id);
 	}
 
 	public List<PostVo> findByCategoryNo(Long categoryNo) {
 		return sqlSession.selectList("post.findByCategoryNo", categoryNo);
 	}
 	
-	public PostVo findByBlogId(String blogId) {
-		return sqlSession.selectOne("post.findByUserId", blogId);
+	public PostVo findByBlogId(String id) {
+		return sqlSession.selectOne("post.findByBlogId", id);
 	}
 	
-	public PostVo findByCategoryNoPostNoBlogId(Long categoryNo, Long postNo, String blogId) {
+	public PostVo findByCategoryNoPostNoBlogId(Long categoryNo, Long postNo, String id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("cno", categoryNo);
 		map.put("pno", postNo);
-		map.put("bid", blogId);
+		map.put("id", id);
 		
 		return sqlSession.selectOne("post.findByCaterogyNoPostNoBlogId", map);
 	}

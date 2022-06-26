@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!doctype html>
 <html>
@@ -31,7 +33,7 @@
 			</spring:hasBindErrors>
 
 
-			<label class="block-label" for="blog-id">아이디</label> 
+			<label class="block-label" for="blogId">아이디</label> 
 			<form:input path="id" /> 
 			<input id="btn-checkemail" type="button" value="id 중복체크"> 
 			<img id="img-checkemail" style="display: none;"

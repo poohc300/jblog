@@ -14,17 +14,21 @@ public class PostService {
 	@Autowired
 	private PostRepository postRepository;
 	
-	public List<PostVo> findAll(Long categoryNo, String blogId) {
+	public List<PostVo> findAll(Long categoryNo, String id) {
 		if(categoryNo == 0) {
-			return postRepository.findAllByBlogId(blogId);
+			return postRepository.findAllByBlogId(id);
 		}
 		return postRepository.findByCategoryNo(categoryNo);
 	}
 
-	public PostVo findByCategoryNoPostNoBlogId(Long categoryNo, Long postNo, String blogId) {
+	public PostVo findByCategoryNoPostNoBlogId(Long categoryNo, Long postNo, String id) {
 		if(categoryNo == 0 && postNo == 0) {
-			return postRepository.findByBlogId(blogId);
+			return postRepository.findByBlogId(id);
 		}
-		return postRepository.findByCategoryNoPostNoBlogId(categoryNo, postNo, blogId);
+		return postRepository.findByCategoryNoPostNoBlogId(categoryNo, postNo, id);
 	}
+	public void insert(PostVo vo) {
+		postRepository.insert(vo);
+	}
+
 }

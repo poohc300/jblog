@@ -12,11 +12,11 @@ public class BlogService {
 	@Autowired
 	private BlogRepository blogRepository;
 	
-	public BlogVo getAll(String id) {
+	public BlogVo findAll(String id) {
 		return blogRepository.findAll(id);
 	}
 	
-	public String getBlog(String id) {
+	public String findBlog(String id) {
 		return blogRepository.findById(id);
 	}
 	

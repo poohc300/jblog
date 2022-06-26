@@ -4,7 +4,7 @@
 <insert id="insert"  parameterType="map" >
 		<![CDATA[
 			INSERT INTO category (name, description, blog_id)
-				VALUES (#{name }, #{description }, #{blog_id })
+				VALUES (#{name }, #{description }, #{ id })
 		]]>	
 	</insert>	
 	

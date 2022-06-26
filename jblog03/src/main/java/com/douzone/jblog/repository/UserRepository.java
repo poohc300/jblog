@@ -22,7 +22,7 @@ public class UserRepository {
 		map.put("id", email);
 		map.put("password", password);
 	
-		return sqlSession.selectOne("findByIdPassword", map);
+		return sqlSession.selectOne("findByEmailPassword", map);
 	}	
 	
 	public boolean insert(@Valid UserVo userVo) {

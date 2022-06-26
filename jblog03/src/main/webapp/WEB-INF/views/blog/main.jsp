@@ -15,18 +15,25 @@
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
-					<h4>포스트 제목</h4>
+					<h4>${postVo.title }</h4>
+					<p>${fn:replace(postVo.contents, newLine, "<br/>") }</p>
 				</div>
-				<div class="blog-list">
-					포스트 리스트
-				</div>
+				<ul class="blog-list">
+					<c:forEach items='${postList }' var='vo'>
+						<li>
+							<a href="${pageContext.request.contextPath}/${id}/${vo.category_no}/${vo.no}">${vo.title }</a>
+							<span>${vo.regDate }</span></li>
+					</c:forEach>
+				</ul>
 			</div>
 		</div>
+
 		<div id="extra">
 			<div class="blog-logo">
 				<img src="${pageContext.request.contextPath}${blogVo.logo }">
 			</div>
 		</div>
+
 		<c:import url="/WEB-INF/views/blog/includes/navigation.jsp" />
 
 		<c:import url="/WEB-INF/views/blog/includes/footer.jsp" />

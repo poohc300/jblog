@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="blog">
 
-	<select id="findAllByBlogId" parameterType="string" resultType="postvo">
+		<select id="findAllByBlogId" parameterType="string" resultType="postvo">
 		<![CDATA[
 			select a.no, a.title, a.reg_date, b.no as category_no
 				from post a left join category b on a.category_no = b.no
@@ -10,6 +10,7 @@
 				order by a.no desc;
 		]]>
 	</select>
+	
 	
 	<select id="findByCategoryNo" parameterType="long" resultType="postvo">
 		<![CDATA[
@@ -24,7 +25,7 @@
 		<![CDATA[
 			SELECT a.no, a.title, a.category_no , a.contents, a.reg_date
 				FROM post a left join category b on a.category_no = b.no
-			WHERE b.blog_id = #{id }
+			WHERE b.blog_id = #{ id }
 				ORDER BY a.no desc limit 1
 		]]>
 	</select>

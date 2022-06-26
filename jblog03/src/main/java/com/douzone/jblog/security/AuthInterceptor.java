@@ -5,53 +5,51 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.douzone.jblog.vo.UserVo;
 
-public class AuthInterceptor extends HandlerInterceptorAdapter {
+public class AuthInterceptor implements HandlerInterceptor {
 
 	@Override
-	public boolean preHandle(
-		HttpServletRequest request,
-		HttpServletResponse response,
-		Object handler)
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
-		//1. handler Á¾·ù È®ÀÎ
-		if(handler instanceof HandlerMethod == false) {
-			// DefaultServletHandler°¡ Ã³¸®ÇÏ´Â °æ¿ì(Á¤Àû ÀÚ¿ø Á¢±Ù)
-			return true;
+		// 1. Handler ì¢…ë¥˜ í™•ì¸(ìºìŠ¤íŒ… ì˜¤ë¥˜ ëŒ€ë¹„)
+		if(!(handler instanceof HandlerMethod)) {
+			// Default servlet handlerê°€ ì²˜ë¦¬í•˜ëŠ” ì •ì  ìì›
+			return true;			
 		}
-		
-		//2. casting
+
+		// 2. casting
 		HandlerMethod handlerMethod = (HandlerMethod)handler;
 		
-		//3. Handler MethodÀÇ @Auth ¹Ş¾Æ¿À±â
+		// 3. Handler Methodì˜ @Auth ë°›ì•„ì˜¤ëŠ” ì‘ì—…
 		Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
 		
-		//4. Handler Method¿¡ @Auth°¡ ¾øÀ¸¸é Type¿¡ ºÙ¾î ÀÖ´ÂÁö È®ÀÎÇÑ´Ù(°úÁ¦)
+		// 4. Handler Methodì— @Authê°€ ì—†ìœ¼ë©´ Typeì— ë¶™ì–´ ìˆëŠ”ì§€ í™•ì¸
 		if(auth == null) {
-			auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
-		}
+			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
+		}		
 		
-		//5. TypeÀÌ³ª Method µÑ ´Ù @Auth°¡ Àû¿ëÀÌ ¾ÈµÇ¾î ÀÖ´Â °æ¿ì
+		// 5. Typeê³¼ Method ëª¨ë‘ì— @Authê°€ ì•ˆë¶™ì–´ ìˆëŠ” ê²½ìš°
 		if(auth == null) {
 			return true;
 		}
 		
-		//6. @Auth°¡ ºÙ¾î ÀÖ±â ¶§¹®¿¡ ÀÎÁõ(Authenfication) ¿©ºÎ È®ÀÎ
+		// 6. Handler Methodì— @Authê°€ ë¶™ì–´ ìˆê¸° ë•Œë¬¸ì— ì¸ì¦(Authentication) ì—¬ë¶€ í™•ì¸
 		HttpSession session = request.getSession();
 		if(session == null) {
-			response.sendRedirect(request.getContextPath()+"/user/login");
+			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
 		}
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		if(authUser == null) {
-			response.sendRedirect(request.getContextPath()+"/user/login");
+			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
 		}
+
 		
 		return true;
 	}

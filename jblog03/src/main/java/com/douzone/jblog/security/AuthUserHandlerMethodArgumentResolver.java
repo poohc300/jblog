@@ -18,16 +18,16 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 	public boolean supportsParameter(MethodParameter parameter) {
 		AuthUser authUser = parameter.getParameterAnnotation(AuthUser.class);
 		
-		// @AuthUser°¡ ¾ÈºÙ¾î ÀÖÀ¸¸é
+		// @AuthUserê°€ ì•ˆë¶™ì–´ ìˆì„ ë•Œ
 		if(authUser == null) {
 			return false;
 		}
 		
-		// Parameter TypeÀÌ UserVo°¡ ¾Æ´Ï¸é
+		// Parameter Typeì´ UserVoê°€ ì•„ë‹ˆë©´ 
 		if(!parameter.getParameterType().equals(UserVo.class)) {
 			return false;
 		}
-		
+				
 		return true;
 	}
 
@@ -37,8 +37,9 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 		ModelAndViewContainer mavContainer,
 		NativeWebRequest webRequest,
 		WebDataBinderFactory binderFactory) throws Exception {
+		
 		if(!supportsParameter(parameter)) {
-			return WebArgumentResolver.UNRESOLVED;
+			return WebArgumentResolver.UNRESOLVED; // = null
 		}
 		
 		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
