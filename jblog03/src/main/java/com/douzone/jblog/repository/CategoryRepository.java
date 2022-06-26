@@ -19,13 +19,13 @@ public class CategoryRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public boolean insert(@Valid UserVo userVo) {
+	public boolean create(@Valid UserVo userVo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "게시판");
 		map.put("description", "게시판");
 		map.put("id", userVo.getId());	
 		
-		return sqlSession.insert("category.insert", map) == 1;	
+		return sqlSession.insert("category.create", map) == 1;	
 	}
 	
 	public List<CategoryVo> findAll(String id){

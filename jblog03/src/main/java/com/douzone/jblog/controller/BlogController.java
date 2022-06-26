@@ -65,6 +65,46 @@ public class BlogController {
 		return "/blog/main";
 	}
 	
+	@RequestMapping("/admin/basic")
+	public String adminBasic(@PathVariable("id") String id, @AuthUser UserVo authUser, Model model) {
+
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		
+		if (!authUser.getId().equals(id)) {
+			return "redirect:/";
+		}
+			
+
+		BlogVo blogVo = blogService.findAll(id);
+
+		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("blog", blogService.findBlog(id));
+
+		return "/blog/admin/basic";
+	}
+
+	@RequestMapping(value = "/admin/basic", method = RequestMethod.POST)
+	public String adminBasic(@PathVariable("id") String id, @AuthUser UserVo authUser,
+			@RequestParam("logo-file") MultipartFile multipartFile, BlogVo vo) throws FileUploadException {
+
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		
+		if (!authUser.getId().equals(id)) {
+			return "redirect:/";
+		}
+
+		String url = fileUploadService.restoreImage(multipartFile);
+		vo.setLogo(url);
+		vo.setId(authUser.getId());
+		blogService.updateBlog(vo);
+
+		return "redirect:/" + id;
+	}
+	
 	@RequestMapping("/admin/category")
 	public String adminCategory(@PathVariable("id") String id, @AuthUser UserVo authUser, Model model) {
 
