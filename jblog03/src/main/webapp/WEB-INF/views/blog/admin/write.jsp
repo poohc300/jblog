@@ -26,7 +26,7 @@
 			      			<td class="t">제목</td>
 			      			<td>
 			      				<input type="text" size="60" name="title">
-				      			<select name="category_no">
+				      			<select name="categoryNo">
 				      				<c:forEach items='${list }' var='vo'>
 				      					<option value='${vo.no }'>${vo.name }</option>
 				      				</c:forEach>

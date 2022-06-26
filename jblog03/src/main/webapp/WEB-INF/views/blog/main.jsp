@@ -26,7 +26,7 @@ pageContext.setAttribute("newLine", "\n");
 				<ul class="blog-list">
 					<c:forEach items='${postList }' var='vo'>
 						<li>
-							<a href="${pageContext.request.contextPath}/${id}/${vo.category_no}/${vo.no}">${vo.title }</a>
+							<a href="${pageContext.request.contextPath}/${id}/${vo.categoryNo}/${vo.no}">${vo.title }</a>
 							<span>${vo.regDate }</span></li>
 					</c:forEach>
 				</ul>
