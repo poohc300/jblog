@@ -39,7 +39,6 @@ public class BlogController {
 	@Autowired
 	private PostService postService;
 	
-	@ResponseBody
 	@RequestMapping({"", "/{pathNo1}", "/{pathNo1}/{pathNo2}"})
 	public String index(
 		@PathVariable("id") String id,
