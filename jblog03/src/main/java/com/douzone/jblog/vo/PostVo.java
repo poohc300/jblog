@@ -6,6 +6,14 @@ public class PostVo {
 	private String title;
 	private String contents;
 	private Long categoryNo;
+	private String regDate;
+	
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
 	public Long getNo() {
 		return no;
 	}

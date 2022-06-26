@@ -10,12 +10,12 @@ public class BlogService {
 	@Autowired
 	private BlogRepository blogRepository;
 	
-	public void create(BlogVo vo) {
-		blogRepository.insert(vo);
+	public BlogVo getAll(String id) {
+		return blogRepository.findAll(id);
 	}
 	
-	public BlogVo getBlog(Long no) {
-		return blogRepository.findByNo(no);
+	public String getBlog(String id) {
+		return blogRepository.findById(id);
 	}
 	
 	public void updateBlog(BlogVo vo) {

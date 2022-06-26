@@ -1,5 +1,10 @@
 package com.douzone.jblog.repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,19 +17,20 @@ public class UserRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public boolean insert(UserVo vo) {
-		return sqlSession.insert("user.insert", vo) == 1;
-	}
-
-	public UserVo findByEmailAndPassword(UserVo vo) {
-		return sqlSession.selectOne("user.findByEmailAndPassword", vo);
+	public UserVo getUser(String email, String password) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", email);
+		map.put("password", password);
+	
+		return sqlSession.selectOne("findByIdPassword", map);
 	}	
-
-	public UserVo findByNo(Long userNo) {
-		return sqlSession.selectOne("user.findByNo", userNo);
+	
+	public boolean insert(@Valid UserVo userVo) {
+		return sqlSession.insert("user.insert", userVo) == 1;		
 	}
 
-	public boolean update(UserVo vo) {
-		return sqlSession.update("user.update", vo) == 1;
+	public void update(UserVo vo) {
+		// TODO Auto-generated method stub
+		
 	}
 }
