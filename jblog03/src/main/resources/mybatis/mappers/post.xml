@@ -51,7 +51,7 @@
 	
 	
 
-	<insert id="insert" parameterType="postvo">
+	<insert id="insertOne" parameterType="postvo">
 		<![CDATA[
 			INSERT INTO post(title, contents, reg_date, category_no)
 				VALUES (#{title }, #{contents }, now(), #{category_no} )

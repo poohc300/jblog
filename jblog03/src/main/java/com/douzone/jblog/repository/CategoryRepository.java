@@ -33,7 +33,7 @@ public class CategoryRepository {
 	}
 	
 	public void insert(CategoryVo vo) {
-		sqlSession.insert("category.insert", vo);
+		sqlSession.insert("category.insertOne", vo);
 	}
 	
 	public void delete(String id, Long no) {		

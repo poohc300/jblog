@@ -17,7 +17,7 @@
 	</select>
 	
 	
-	<insert id="insert" parameterType="categoryvo">
+	<insert id="insertOne" parameterType="categoryvo">
 		<![CDATA[
 			insert into category (name, description, blog_id)
 						  values (#{name}, #{description},#{blog_id});

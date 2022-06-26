@@ -16,7 +16,9 @@ import com.douzone.jblog.exception.FileUploadException;
 import com.douzone.jblog.security.Auth;
 import com.douzone.jblog.security.AuthUser;
 import com.douzone.jblog.service.BlogService;
+import com.douzone.jblog.service.CategoryService;
 import com.douzone.jblog.service.FileUploadService;
+import com.douzone.jblog.service.PostService;
 import com.douzone.jblog.vo.BlogVo;
 import com.douzone.jblog.vo.UserVo;
 
@@ -24,10 +26,15 @@ import com.douzone.jblog.vo.UserVo;
 @RequestMapping("/{id:(?!assets).*}")
 public class BlogController {
 
+
 	@Autowired
 	private BlogService blogService;
 	@Autowired
+	private CategoryService categoryService;
+	@Autowired
 	private FileUploadService fileUploadService;
+	@Autowired
+	private PostService postService;
 	
 	@ResponseBody
 	@RequestMapping({"", "/{pathNo1}", "/{pathNo1}/{pathNo2}"})
@@ -48,6 +55,9 @@ public class BlogController {
 		BlogVo blogVo = blogService.getAll(id);
 		
 		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("categoryVo", categoryService.findAll(id));
+		model.addAttribute("postList", postService.findAll(categoryNo, id));
+		model.addAttribute("postVo", postService.findByCategoryNoPostNoBlogId(categoryNo, postNo, id));
 		model.addAttribute("blog", blogVo.getTitle());
 		
 		return "/blog/main";
